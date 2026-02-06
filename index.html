@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>e-Dnevnik | Prijava</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .login-card {
+            width: 360px;
+            padding: 2.5rem 2.2rem;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            color: #fff;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto 1rem;
+            max-width: 120px;
+            opacity: 0.95;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.4rem;
+            margin: 0 0 0.3rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.85;
+            margin-bottom: 2rem;
+        }
+
+        .field {
+            margin-bottom: 1.2rem;
+        }
+
+        .field label {
+            display: block;
+            font-size: 0.75rem;
+            margin-bottom: 0.35rem;
+            opacity: 0.9;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 0.8rem 0.9rem;
+            border-radius: 14px;
+            border: none;
+            outline: none;
+            font-size: 0.95rem;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.95rem;
+            border-radius: 16px;
+            border: none;
+            margin-top: 0.5rem;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .login-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px rgba(0, 0, 0, 0.3);
+        }
+
+        .error {
+            margin-top: 0.8rem;
+            font-size: 0.75rem;
+            color: #ffd6d6;
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+        <img src="e-dnevnik-logo.png" alt="Logo" class="logo" />
+        <h1>e-Dnevnik</h1>
+        <div class="subtitle">Prijava u sustav</div>
+
+        <div class="field">
+            <label for="username">Korisničko ime</label>
+            <input id="username" type="text" placeholder="Ime.Prezime" />
+        </div>
+
+        <div class="field">
+            <label for="password">Lozinka</label>
+            <input id="password" type="password" placeholder="Unesite lozinku..." />
+        </div>
+
+        <button class="login-btn" id="loginBtn">Prijava</button>
+
+        <div class="error" id="errorMsg">Korisničko ime ili lozinka nisu ispravni.</div>
+    </div>
+
+    <script>
+        const btn = document.getElementById('loginBtn');
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const error = document.getElementById('errorMsg');
+
+        // ==========================================================
+        // BAZA PODATAKA S OPISIMA OCJENA
+        //{ ocjena: 3, opis: "Test" },
+        // ==========================================================
+        const bazaUcenika = {
+            "Omer.Smailbegovic": {
+                ime: "Omer Smailbegović",
+                podaci: [
+                    { ocjena: 5, opis: "Pomoć učenicima" },
+                ]
+            },
+            "Matija.Perucica": {
+                ime: "Matija Perućica",
+                podaci: [
+                    { ocjena: 4, opis: "Zadatak s sata" },
+                ]
+            },
+            "Nikola.Ujic": {
+                ime: "Nikola Ujić",
+                podaci: [
+                    { ocjena: 5, opis: "Zadatak s sata" },
+                ]
+            },
+            "Una.Savic": {
+                ime: "Una Savić",
+                podaci: [
+
+                ]
+            },
+            "Una.Drakul": {
+                ime: "Una Drakul",
+                podaci: [
+
+                ]
+            },
+            "Helena.Petricevic": {
+                ime: "Helena Petričević",
+                podaci: [
+                    { ocjena: 5, opis: "Aktivnost na satu" }
+                ]
+            },
+            "Filip.Vujicic": {
+                ime: "Filip Vujičić",
+                podaci: [
+                    { ocjena: 5, opis: "Test" }
+                ]
+            },
+            "Sergej.Savcic": {
+                ime: "Sergej Savčić",
+                podaci: [
+                    { ocjena: 5, opis: "Test" }
+                ]
+            }
+        };
+
+        btn.addEventListener('click', () => {
+            error.style.display = 'none';
+            const user = username.value.trim();
+            const pass = password.value;
+
+            if (!user || !pass) {
+                error.textContent = 'Popunite oba polja.';
+                error.style.display = 'block';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Provjera…';
+
+            // SPREMANJE BAZE I KORISNIKA
+            localStorage.setItem('globalnaBaza', JSON.stringify(bazaUcenika));
+
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.textContent = 'Prijava';
+
+                // Nastavnik Login
+                if (user === 'Prof.Boris' && pass === '2805') {
+                    localStorage.setItem('currentUser', 'Prof.Boris');
+                    window.location.href = 'nastavnik.html';
+                    return;
+                }
+                if (user === 'Prof.Zoran' && pass === '4428') {
+                    localStorage.setItem('currentUser', 'Prof.Zoran');
+                    window.location.href = 'nastavnik.html';
+                    return;
+                }
+
+                // Učenik Login
+                if (bazaUcenika[user] && pass === 'ucenik123') {
+                    localStorage.setItem('currentUser', user);
+                    window.location.href = 'ucenik.html';
+                    return;
+                }
+
+                error.style.display = 'block';
+                password.value = '';
+            }, 800);
+        });
+    </script>
+</body>
+
+</html>

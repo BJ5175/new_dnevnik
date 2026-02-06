@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>e-Dnevnik | Nastavnik</title>
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: Arial, sans-serif;
+            padding: 40px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 900px;
+            margin: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        th {
+            background: #f8f8f8;
+            color: #555;
+        }
+
+        .grade-btn {
+            background: #764ba2;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .grade-btn:hover {
+            background: #667eea;
+        }
+
+        .avg {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .summary {
+            background: #333;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Administracija Ocjena</h1>
+        <p style="color: #666;">Kliknite na ocjenu za prikaz opisa.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Učenik</th>
+                    <th>Ocjene</th>
+                    <th>Prosjek</th>
+                </tr>
+            </thead>
+            <tbody id="tablicaBody"></tbody>
+        </table>
+        <div class="summary">Prosjek razreda: <span id="razredProsjek"
+                style="color: #ff9a9e; font-size: 1.5rem;">0.00</span></div>
+        <center><a href="index.html" style="display:block; margin-top:20px; color:#999; text-decoration:none;">Odjavi
+                se</a></center>
+    </div>
+
+    <script>
+        const baza = JSON.parse(localStorage.getItem('globalnaBaza'));
+        const tbody = document.getElementById('tablicaBody');
+
+        if (baza) {
+            let ukupnoProsjeka = 0;
+            let brojUcenika = 0;
+
+            for (let user in baza) {
+                const ucenik = baza[user];
+                const suma = ucenik.podaci.reduce((a, b) => a + b.ocjena, 0);
+                const prosjek = (suma / ucenik.podaci.length).toFixed(2);
+
+                ukupnoProsjeka += parseFloat(prosjek);
+                brojUcenika++;
+
+                const tr = document.createElement('tr');
+
+                // Ime
+                const tdIme = document.createElement('td');
+                tdIme.innerHTML = `<strong>${ucenik.ime}</strong>`;
+
+                // Ocjene (svaka je gumb)
+                const tdOcjene = document.createElement('td');
+                ucenik.podaci.forEach(o => {
+                    const btn = document.createElement('button');
+                    btn.className = 'grade-btn';
+                    btn.textContent = o.ocjena;
+                    btn.onclick = () => alert(`Učenik: ${ucenik.ime}\nOcjena: ${o.ocjena}\nOpis: ${o.opis}`);
+                    tdOcjene.appendChild(btn);
+                });
+
+                // Prosjek
+                const tdAvg = document.createElement('td');
+                tdAvg.className = 'avg';
+                tdAvg.textContent = prosjek;
+
+                tr.appendChild(tdIme);
+                tr.appendChild(tdOcjene);
+                tr.appendChild(tdAvg);
+                tbody.appendChild(tr);
+            }
+            document.getElementById('razredProsjek').textContent = (ukupnoProsjeka / brojUcenika).toFixed(2);
+        }
+    </script>
+</body>
+
+</html>
