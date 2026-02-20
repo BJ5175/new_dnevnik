@@ -1,94 +1,38 @@
 <!DOCTYPE html>
 <html lang="hr">
-
 <head>
     <meta charset="UTF-8">
     <title>e-Dnevnik | Nastavnik</title>
     <style>
-        body {
-            margin: 0;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            font-family: Arial, sans-serif;
-            padding: 40px;
-        }
-
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            max-width: 900px;
-            margin: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th,
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            text-align: left;
-        }
-
-        th {
-            background: #f8f8f8;
-            color: #555;
-        }
-
-        .grade-btn {
-            background: #764ba2;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-right: 5px;
-        }
-
-        .grade-btn:hover {
-            background: #667eea;
-        }
-
-        .avg {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #333;
-        }
-
-        .summary {
-            background: #333;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            text-align: center;
-        }
+        body { margin: 0; background: linear-gradient(135deg, #667eea, #764ba2); font-family: Arial, sans-serif; padding: 40px; }
+        .container { background: white; padding: 30px; border-radius: 20px; max-width: 900px; margin: auto; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 15px; border-bottom: 1px solid #eee; text-align: left; }
+        th { background: #f8f8f8; color: #555; }
+        .grade-btn { color: white; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-right: 5px; transition: 0.2s; }
+        .btn-blue { background: #764ba2; }
+        .btn-note { background: #95a5a6; } /* Siva boja za bilješke */
+        .grade-btn:hover { opacity: 0.8; transform: translateY(-1px); }
+        .avg { font-weight: bold; font-size: 1.1rem; color: #333; }
+        .summary { background: #333; color: white; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center; }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h1>Administracija Ocjena</h1>
-        <p style="color: #666;">Kliknite na ocjenu za prikaz opisa.</p>
+        <p style="color: #666;">Kliknite na ocjenu ili "i" za prikaz opisa bilješke.</p>
         <table>
             <thead>
                 <tr>
                     <th>Učenik</th>
-                    <th>Ocjene</th>
+                    <th>Ocjene i Bilješke</th>
                     <th>Prosjek</th>
                 </tr>
             </thead>
             <tbody id="tablicaBody"></tbody>
         </table>
-        <div class="summary">Prosjek razreda: <span id="razredProsjek"
-                style="color: #ff9a9e; font-size: 1.5rem;">0.00</span></div>
-        <center><a href="index.html" style="display:block; margin-top:20px; color:#999; text-decoration:none;">Odjavi
-                se</a></center>
+        <div class="summary">Prosjek razreda: <span id="razredProsjek" style="color: #ff9a9e; font-size: 1.5rem;">0.00</span></div>
+        <center><a href="index.html" style="display:block; margin-top:20px; color:#999; text-decoration:none;">Odjavi se</a></center>
     </div>
 
     <script>
@@ -96,34 +40,49 @@
         const tbody = document.getElementById('tablicaBody');
 
         if (baza) {
-            let ukupnoProsjeka = 0;
-            let brojUcenika = 0;
+            let sumaSvihProsjeka = 0;
+            let ucenikaSProsjekom = 0;
 
             for (let user in baza) {
                 const ucenik = baza[user];
-                const suma = ucenik.podaci.reduce((a, b) => a + b.ocjena, 0);
-                const prosjek = (suma / ucenik.podaci.length).toFixed(2);
+                
+                // FILTRIRANJE: Uzimamo samo stavke koje imaju ocjenu (broj)
+                const samoOcjene = ucenik.podaci.filter(p => p.ocjena !== undefined).map(p => p.ocjena);
+                
+                // Izračun prosjeka učenika
+                const suma = samoOcjene.reduce((a, b) => a + b, 0);
+                const prosjek = samoOcjene.length > 0 ? (suma / samoOcjene.length).toFixed(2) : "0.00";
 
-                ukupnoProsjeka += parseFloat(prosjek);
-                brojUcenika++;
+                if (samoOcjene.length > 0) {
+                    sumaSvihProsjeka += parseFloat(prosjek);
+                    ucenikaSProsjekom++;
+                }
 
                 const tr = document.createElement('tr');
 
-                // Ime
+                // Stupac: Ime
                 const tdIme = document.createElement('td');
                 tdIme.innerHTML = `<strong>${ucenik.ime}</strong>`;
 
-                // Ocjene (svaka je gumb)
+                // Stupac: Ocjene (gumbi)
                 const tdOcjene = document.createElement('td');
                 ucenik.podaci.forEach(o => {
                     const btn = document.createElement('button');
                     btn.className = 'grade-btn';
-                    btn.textContent = o.ocjena;
-                    btn.onclick = () => alert(`Učenik: ${ucenik.ime}\nOcjena: ${o.ocjena}\nOpis: ${o.opis}`);
+                    
+                    if (o.ocjena === undefined) {
+                        btn.textContent = 'i';
+                        btn.classList.add('btn-note');
+                        btn.onclick = () => alert(`Učenik: ${ucenik.ime}\nTIP: Bilješka\nOpis: ${o.opis}`);
+                    } else {
+                        btn.textContent = o.ocjena;
+                        btn.classList.add('btn-blue');
+                        btn.onclick = () => alert(`Učenik: ${ucenik.ime}\nOcjena: ${o.ocjena}\nOpis: ${o.opis}`);
+                    }
                     tdOcjene.appendChild(btn);
                 });
 
-                // Prosjek
+                // Stupac: Prosjek
                 const tdAvg = document.createElement('td');
                 tdAvg.className = 'avg';
                 tdAvg.textContent = prosjek;
@@ -133,9 +92,10 @@
                 tr.appendChild(tdAvg);
                 tbody.appendChild(tr);
             }
-            document.getElementById('razredProsjek').textContent = (ukupnoProsjeka / brojUcenika).toFixed(2);
+            
+            const konacniProsjekRazreda = ucenikaSProsjekom > 0 ? (sumaSvihProsjeka / ucenikaSProsjekom).toFixed(2) : "0.00";
+            document.getElementById('razredProsjek').textContent = konacniProsjekRazreda;
         }
     </script>
 </body>
-
 </html>

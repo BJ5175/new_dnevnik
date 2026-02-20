@@ -1,96 +1,28 @@
 <!DOCTYPE html>
 <html lang="hr">
-
 <head>
     <meta charset="UTF-8">
     <title>e-Dnevnik | Moje Ocjene</title>
     <style>
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            font-family: Arial, sans-serif;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2.5rem;
-            border-radius: 22px;
-            width: 400px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-        }
-
-        .grade-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-
-        .grade-item {
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .grade-item:active {
-            transform: scale(0.9);
-        }
-
-        .grade-box {
-            background: #764ba2;
-            color: white;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        #opisZone {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f0f2f5;
-            border-radius: 10px;
-            color: #555;
-            min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-style: italic;
-            border: 1px dashed #764ba2;
-        }
-
-        .average-section {
-            margin-top: 30px;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-
-        .average-value {
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: #333;
-        }
+        body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea, #764ba2); font-family: Arial, sans-serif; }
+        .card { background: rgba(255, 255, 255, 0.95); padding: 2.5rem; border-radius: 22px; width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); }
+        .grade-container { display: flex; justify-content: center; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
+        .grade-item { cursor: pointer; transition: transform 0.2s; }
+        .grade-item:active { transform: scale(0.9); }
+        .grade-box { color: white; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-weight: bold; font-size: 1.5rem; }
+        .bg-purple { background: #764ba2; }
+        .bg-gray { background: #95a5a6; }
+        #opisZone { margin-top: 20px; padding: 15px; background: #f0f2f5; border-radius: 10px; color: #555; min-height: 50px; display: flex; align-items: center; justify-content: center; font-style: italic; border: 1px dashed #764ba2; }
+        .average-section { margin-top: 30px; border-top: 1px solid #eee; padding-top: 15px; }
+        .average-value { font-size: 2.2rem; font-weight: bold; color: #333; }
     </style>
 </head>
-
 <body>
     <div class="card">
         <h1 id="imeUcenika">Učitavanje...</h1>
-        <p>Klikni na ocjenu za detalje:</p>
-
+        <p>Klikni na ocjenu ili info za detalje:</p>
         <div class="grade-container" id="prikazOcjena"></div>
-
-        <div id="opisZone">Kliknite na ocjenu iznad...</div>
-
+        <div id="opisZone">Kliknite na stavku iznad...</div>
         <div class="average-section">
             <div style="color: #666;">Ukupni prosjek:</div>
             <div class="average-value" id="mojProsjek">0.00</div>
@@ -108,34 +40,43 @@
             const ucenik = baza[prijavljeniUser];
             document.getElementById('imeUcenika').textContent = ucenik.ime;
             const kontejner = document.getElementById('prikazOcjena');
-            let suma = 0;
-
+            
+            // FILTRIRANJE ZA PROSJEK (Samo brojčane ocjene)
+            const samoOcjeneStavke = ucenik.podaci.filter(s => s.ocjena !== undefined);
+            const suma = samoOcjeneStavke.reduce((a, b) => a + b.ocjena, 0);
+            
             ucenik.podaci.forEach(stavka => {
-                // Kreiramo element za ocjenu
                 const gradeWrapper = document.createElement('div');
                 gradeWrapper.className = 'grade-item';
 
                 const box = document.createElement('div');
                 box.className = 'grade-box';
-                box.textContent = stavka.ocjena;
-
-                // Funkcija za klik
-                gradeWrapper.onclick = () => {
-                    opisZone.innerHTML = `<strong>Ocjena ${stavka.ocjena}:</strong> ${stavka.opis}`;
-                    opisZone.style.background = "#e8f0fe";
-                };
+                
+                if (stavka.ocjena === undefined) {
+                    box.textContent = "i";
+                    box.classList.add('bg-gray');
+                    gradeWrapper.onclick = () => {
+                        opisZone.innerHTML = `<strong>Bilješka:</strong> ${stavka.opis}`;
+                        opisZone.style.background = "#fff3cd"; // Žućkasta boja za bilješke
+                    };
+                } else {
+                    box.textContent = stavka.ocjena;
+                    box.classList.add('bg-purple');
+                    gradeWrapper.onclick = () => {
+                        opisZone.innerHTML = `<strong>Ocjena ${stavka.ocjena}:</strong> ${stavka.opis}`;
+                        opisZone.style.background = "#e8f0fe";
+                    };
+                }
 
                 gradeWrapper.appendChild(box);
                 kontejner.appendChild(gradeWrapper);
-                suma += stavka.ocjena;
             });
 
-            const prosjek = (suma / ucenik.podaci.length).toFixed(2);
+            const prosjek = samoOcjeneStavke.length > 0 ? (suma / samoOcjeneStavke.length).toFixed(2) : "0.00";
             document.getElementById('mojProsjek').textContent = prosjek;
         } else {
             window.location.href = 'index.html';
         }
     </script>
 </body>
-
 </html>
