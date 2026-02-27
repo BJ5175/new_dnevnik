@@ -16,7 +16,7 @@ const bazaUcenika = {
             { ocjena: 3, opis: "Test 65/100" },
             { ocjena: 2, opis: "Projekat" }
         ],
-        vladanje: 4
+        vladanje: 3
     },
     "Nikola.Ujic": {
         ime: "Nikola Ujić",
@@ -68,7 +68,7 @@ const bazaUcenika = {
             { ocjena: 5, opis: "CodeMatrix" },
             { ocjena: 5, opis: "CodeMatrix" }
         ],
-        vladanje: 5
+        vladanje: 4
     },
     "Sergej.Savcic": {
         ime: "Sergej Savčić",
