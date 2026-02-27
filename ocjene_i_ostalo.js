@@ -12,11 +12,13 @@ const bazaUcenika = {
         prezime: "Perucica",
         izostanci: [],
         podaci: [
+            { ocjena: 5, opis: "Zadatak s sata" },
             { ocjena: 4, opis: "Zadatak s sata" },
             { ocjena: 3, opis: "Test 65/100" },
-            { ocjena: 2, opis: "Projekat" }
+            { ocjena: 2, opis: "Projekat" },
+            { ocjena: 1, opis: "Aktivnost na satu" }
         ],
-        vladanje: 3
+        vladanje: 2
     },
     "Nikola.Ujic": {
         ime: "Nikola Ujić",
@@ -25,7 +27,8 @@ const bazaUcenika = {
         podaci: [
             { ocjena: 5, opis: "Zadatak s sata" },
             { ocjena: 5, opis: "Test 100/100" },
-            { ocjena: 4, opis: "Zadatak s sata" }
+            { ocjena: 4, opis: "Zadatak s sata" },
+            { ocjena: 3, opis: "Aktivnost na satu" }
         ],
         vladanje: 5
     },
@@ -46,7 +49,7 @@ const bazaUcenika = {
 
         ],
         podaci: [
-            { ocjena: null, opis: "Učenica ne nosi svoj kompjuter (Windows 7 problem)." },
+            { ocjena: null, opis: "Učenica prosula sok po tuđem laptopu" },
             { ocjena: 5, opis: "Grupni rad" },
             { ocjena: 4, opis: "Vježba" }
         ],
@@ -56,7 +59,10 @@ const bazaUcenika = {
         ime: "Helena Petričević",
         prezime: "Petricevic",
         izostanci: [],
-        podaci: [{ ocjena: 5, opis: "Aktivnost na satu" }],
+        podaci: [{ ocjena: 5, opis: "Aktivnost na satu" },
+            { ocjena: 5, opis: "Zadatak s sata" },
+        ],
+        
         vladanje: 5
     },
     "Filip.Vujicic": {
@@ -76,6 +82,7 @@ const bazaUcenika = {
         izostanci: [],
         podaci: [
             { ocjena: 5, opis: "Test" },
+            { ocjena: 5, opis: "Zadatak" },
             { ocjena: 5, opis: "Zadatak" }
         ],
         vladanje: 5
