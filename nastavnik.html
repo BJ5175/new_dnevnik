@@ -1,26 +1,304 @@
 <!DOCTYPE html>
 <html lang="hr">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>e-Dnevnik | Nastavnik</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        body { margin: 0; background: linear-gradient(135deg, #667eea, #764ba2); font-family: Arial, sans-serif; padding: 40px; }
-        .container { background: white; padding: 30px; border-radius: 20px; max-width: 900px; margin: auto; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 15px; border-bottom: 1px solid #eee; text-align: left; }
-        th { background: #f8f8f8; color: #555; }
-        .grade-btn { color: white; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-right: 5px; transition: 0.2s; }
-        .btn-blue { background: #764ba2; }
-        .btn-note { background: #95a5a6; } /* Siva boja za bilješke */
-        .grade-btn:hover { opacity: 0.8; transform: translateY(-1px); }
-        .avg { font-weight: bold; font-size: 1.1rem; color: #333; }
-        .summary { background: #333; color: white; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            color: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        /* Gumb za odjavu u zaglavlju */
+        .logout-btn-top {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: 0.3s;
+        }
+
+        .logout-btn-top:hover {
+            background: #e74c3c;
+            border-color: transparent;
+        }
+
+        /* Tablica */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 12px;
+        }
+
+        th {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 10px 20px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: middle;
+        }
+
+        td:first-child {
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+
+        td:last-child {
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        .ucenik-ime {
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: underline rgba(255, 255, 255, 0.3);
+            transition: 0.2s;
+        }
+
+        .ucenik-ime:hover {
+            color: #ff9a9e;
+        }
+
+        .grade-btn {
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            margin-right: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            color: #764ba2;
+            transition: 0.2s;
+        }
+
+        .grade-btn:hover {
+            transform: scale(1.15);
+            background: #fff;
+        }
+
+        .avg {
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        /* MODALI */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: #fff;
+            color: #333;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #764ba2;
+            text-align: center;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section-title {
+            margin: 25px 0 10px 0;
+            font-weight: 700;
+            color: #764ba2;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .info-list {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+
+        .list-item {
+            padding: 8px 0;
+            border-bottom: 1px dotted #ccc;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .mini-circle {
+            min-width: 26px;
+            height: 26px;
+            background: #764ba2;
+            color: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .close-btn {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            background: #764ba2;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .summary {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        #razredProsjek {
+            color: #ff9a9e;
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+
+        /* Veliki gumb za odjavu na dnu */
+        .footer-logout {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .footer-logout a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .footer-logout a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h1>Administracija Ocjena</h1>
-        <p style="color: #666;">Kliknite na ocjenu ili "i" za prikaz opisa bilješke.</p>
+        <div class="header-flex">
+            <div>
+                <h1>Administracija Nastavnika</h1>
+                <p class="subtitle">Pregled razreda i statistika</p>
+            </div>
+            <a href="index.html" class="logout-btn-top" onclick="logout()">Odjava</a>
+        </div>
+
         <table>
             <thead>
                 <tr>
@@ -31,71 +309,134 @@
             </thead>
             <tbody id="tablicaBody"></tbody>
         </table>
-        <div class="summary">Prosjek razreda: <span id="razredProsjek" style="color: #ff9a9e; font-size: 1.5rem;">0.00</span></div>
-        <center><a href="index.html" style="display:block; margin-top:20px; color:#999; text-decoration:none;">Odjavi se</a></center>
+
+        <div class="summary">
+            <span>PROSJEK RAZREDA</span>
+            <div id="razredProsjek">0.00</div>
+        </div>
+
+        <div class="footer-logout">
+            <a href="index.html" onclick="logout()">Sigurna odjava iz sustava</a>
+        </div>
     </div>
 
+    <div id="ucenikModal" class="modal">
+        <div class="modal-content">
+            <div id="modalIme" class="modal-header">Ime Učenika</div>
+            <div class="stat-row"><span>Negativne ocjene:</span><strong id="modalNeg" style="color:#e74c3c">0</strong>
+            </div>
+            <div class="stat-row"><span>Izostanci:</span><strong id="modalIzo">0</strong></div>
+            <div class="stat-row"><span>Vladanje:</span><strong id="modalVlad">Uzorito</strong></div>
+
+            <div class="section-title">Sve ocjene</div>
+            <div id="modalListaOcjena" class="info-list"></div>
+
+            <div class="section-title">Sve bilješke</div>
+            <div id="modalListaBiljeski" class="info-list"></div>
+
+            <button class="close-btn" onclick="closeModals()">Zatvori</button>
+        </div>
+    </div>
+
+    <div id="singleGradeModal" class="modal">
+        <div class="modal-content">
+            <div id="gradeTitle" style="font-weight: 700; margin-bottom: 10px; color: #764ba2;">Detalj zapisa</div>
+            <div id="gradeValueCircle"
+                style="width: 60px; height: 60px; background: #764ba2; color: #fff; font-size: 1.8rem; font-weight: 900; border-radius: 50%; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center;">
+                5</div>
+            <p id="gradeUser" style="font-weight: 600; margin-bottom: 10px; text-align:center;"></p>
+            <div id="gradeDescription"
+                style="background: #f4f4f4; padding: 15px; border-radius: 12px; font-style: italic; color: #555;"></div>
+            <button class="close-btn" onclick="closeModals()">U redu</button>
+        </div>
+    </div>
+
+    <script src="ocjene_i_ostalo.js"></script>
+
     <script>
-        const baza = JSON.parse(localStorage.getItem('globalnaBaza'));
         const tbody = document.getElementById('tablicaBody');
 
-        if (baza) {
-            let sumaSvihProsjeka = 0;
-            let ucenikaSProsjekom = 0;
+        function logout() {
+            localStorage.clear();
+        }
 
-            for (let user in baza) {
-                const ucenik = baza[user];
-                
-                // FILTRIRANJE: Uzimamo samo stavke koje imaju ocjenu (broj)
-                const samoOcjene = ucenik.podaci.filter(p => p.ocjena !== undefined).map(p => p.ocjena);
-                
-                // Izračun prosjeka učenika
-                const suma = samoOcjene.reduce((a, b) => a + b, 0);
-                const prosjek = samoOcjene.length > 0 ? (suma / samoOcjene.length).toFixed(2) : "0.00";
+        function otvoriKarton(userKey) {
+            const ucenik = bazaUcenika[userKey];
+            document.getElementById('modalIme').textContent = ucenik.ime;
+            document.getElementById('modalIzo').textContent = (ucenik.izostanci || []).length;
+            document.getElementById('modalVlad').textContent = ucenik.vladanje || "Uzorito";
 
-                if (samoOcjene.length > 0) {
-                    sumaSvihProsjeka += parseFloat(prosjek);
-                    ucenikaSProsjekom++;
+            const oLista = document.getElementById('modalListaOcjena');
+            const bLista = document.getElementById('modalListaBiljeski');
+            oLista.innerHTML = ""; bLista.innerHTML = "";
+            let neg = 0;
+
+            ucenik.podaci.forEach(p => {
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                if (p.ocjena != null) {
+                    if (p.ocjena === 1) neg++;
+                    item.innerHTML = `<span class="mini-circle">${p.ocjena}</span> <span>${p.opis}</span>`;
+                    oLista.appendChild(item);
+                } else {
+                    item.innerHTML = `<span style="color:#f39c12; margin-right:10px;">ℹ️</span> <span>${p.opis}</span>`;
+                    bLista.appendChild(item);
                 }
+            });
+
+            document.getElementById('modalNeg').textContent = neg;
+            document.getElementById('ucenikModal').style.display = "block";
+        }
+
+        function otvoriDetaljOcjene(ime, ocjena, opis) {
+            document.getElementById('gradeUser').textContent = ime;
+            document.getElementById('gradeDescription').textContent = opis;
+            const circle = document.getElementById('gradeValueCircle');
+            circle.textContent = ocjena == null ? "ℹ️" : ocjena;
+            circle.style.background = ocjena == null ? "#f39c12" : "#764ba2";
+            document.getElementById('singleGradeModal').style.display = "block";
+        }
+
+        function closeModals() {
+            document.querySelectorAll('.modal').forEach(m => m.style.display = "none");
+        }
+
+        window.onclick = (e) => { if (e.target.className === 'modal') closeModals(); }
+
+        if (typeof bazaUcenika !== 'undefined') {
+            let sumProsjek = 0, countProsjek = 0;
+            for (let user in bazaUcenika) {
+                const ucenik = bazaUcenika[user];
+                const samoOcjene = ucenik.podaci.filter(p => p.ocjena != null).map(p => p.ocjena);
+                const prosjek = samoOcjene.length > 0 ? (samoOcjene.reduce((a, b) => a + b, 0) / samoOcjene.length).toFixed(2) : "0.00";
+
+                if (samoOcjene.length > 0) { sumProsjek += parseFloat(prosjek); countProsjek++; }
 
                 const tr = document.createElement('tr');
-
-                // Stupac: Ime
                 const tdIme = document.createElement('td');
-                tdIme.innerHTML = `<strong>${ucenik.ime}</strong>`;
+                tdIme.className = 'ucenik-ime';
+                tdIme.textContent = ucenik.ime;
+                tdIme.onclick = () => otvoriKarton(user);
 
-                // Stupac: Ocjene (gumbi)
                 const tdOcjene = document.createElement('td');
-                ucenik.podaci.forEach(o => {
+                ucenik.podaci.forEach(p => {
                     const btn = document.createElement('button');
                     btn.className = 'grade-btn';
-                    
-                    if (o.ocjena === undefined) {
-                        btn.textContent = 'i';
-                        btn.classList.add('btn-note');
-                        btn.onclick = () => alert(`Učenik: ${ucenik.ime}\nTIP: Bilješka\nOpis: ${o.opis}`);
-                    } else {
-                        btn.textContent = o.ocjena;
-                        btn.classList.add('btn-blue');
-                        btn.onclick = () => alert(`Učenik: ${ucenik.ime}\nOcjena: ${o.ocjena}\nOpis: ${o.opis}`);
-                    }
+                    btn.innerHTML = p.ocjena == null ? 'ℹ️' : p.ocjena;
+                    btn.onclick = (e) => { e.stopPropagation(); otvoriDetaljOcjene(ucenik.ime, p.ocjena, p.opis); };
                     tdOcjene.appendChild(btn);
                 });
 
-                // Stupac: Prosjek
                 const tdAvg = document.createElement('td');
                 tdAvg.className = 'avg';
                 tdAvg.textContent = prosjek;
 
-                tr.appendChild(tdIme);
-                tr.appendChild(tdOcjene);
-                tr.appendChild(tdAvg);
+                tr.append(tdIme, tdOcjene, tdAvg);
                 tbody.appendChild(tr);
             }
-            
-            const konacniProsjekRazreda = ucenikaSProsjekom > 0 ? (sumaSvihProsjeka / ucenikaSProsjekom).toFixed(2) : "0.00";
-            document.getElementById('razredProsjek').textContent = konacniProsjekRazreda;
+            document.getElementById('razredProsjek').textContent = countProsjek > 0 ? (sumProsjek / countProsjek).toFixed(2) : "0.00";
         }
     </script>
 </body>
+
 </html>

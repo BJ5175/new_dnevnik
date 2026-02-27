@@ -1,82 +1,410 @@
 <!DOCTYPE html>
 <html lang="hr">
+
 <head>
     <meta charset="UTF-8">
-    <title>e-Dnevnik | Moje Ocjene</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Dnevnik | Učenik</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea, #764ba2); font-family: Arial, sans-serif; }
-        .card { background: rgba(255, 255, 255, 0.95); padding: 2.5rem; border-radius: 22px; width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); }
-        .grade-container { display: flex; justify-content: center; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
-        .grade-item { cursor: pointer; transition: transform 0.2s; }
-        .grade-item:active { transform: scale(0.9); }
-        .grade-box { color: white; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-weight: bold; font-size: 1.5rem; }
-        .bg-purple { background: #764ba2; }
-        .bg-gray { background: #95a5a6; }
-        #opisZone { margin-top: 20px; padding: 15px; background: #f0f2f5; border-radius: 10px; color: #555; min-height: 50px; display: flex; align-items: center; justify-content: center; font-style: italic; border: 1px dashed #764ba2; }
-        .average-section { margin-top: 30px; border-top: 1px solid #eee; padding-top: 15px; }
-        .average-value { font-size: 2.2rem; font-weight: bold; color: #333; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .tab {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 6px;
+            border-radius: 18px;
+        }
+
+        .tab button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 14px;
+            background: transparent;
+            color: #fff;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tab button.active {
+            background: #fff;
+            color: #764ba2;
+        }
+
+        .tabcontent {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .grade-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .grade-item:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .grade-circle {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #764ba2;
+            background: #fff;
+            font-size: 1.1rem;
+        }
+
+        .grade-info {
+            flex-grow: 1;
+            margin-left: 18px;
+            font-size: 0.95rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* DIZAJN TABLICE ZA STATISTIKU */
+        .stats-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stats-table th,
+        .stats-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stats-table th {
+            background: rgba(0, 0, 0, 0.1);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .stats-table td {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .stats-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .summary-box {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 22px;
+            text-align: center;
+        }
+
+        .avg-large {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ff9a9e;
+        }
+
+        .logout {
+            display: block;
+            text-align: center;
+            margin-top: 35px;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: #fff;
+            color: #333;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .big-circle {
+            width: 70px;
+            height: 70px;
+            background: #764ba2;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 900;
+            border-radius: 50%;
+            margin: 0 auto 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-desc {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 15px;
+            font-style: italic;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .close-btn {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            background: #764ba2;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+        }
     </style>
 </head>
+
 <body>
-    <div class="card">
-        <h1 id="imeUcenika">Učitavanje...</h1>
-        <p>Klikni na ocjenu ili info za detalje:</p>
-        <div class="grade-container" id="prikazOcjena"></div>
-        <div id="opisZone">Kliknite na stavku iznad...</div>
-        <div class="average-section">
-            <div style="color: #666;">Ukupni prosjek:</div>
-            <div class="average-value" id="mojProsjek">0.00</div>
+
+    <div class="container">
+        <div class="header">
+            <h1 id="imeUcenika">Pregled</h1>
+            <p>Učenički portal e-Dnevnik</p>
         </div>
-        <br>
-        <a href="index.html" style="color:#888; text-decoration:none; font-size:0.8rem;">Odjavi se</a>
+
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event,'ocjene')">Ocjene</button>
+            <button class="tablinks" onclick="openTab(event,'biljeske')">Bilješke</button>
+            <button class="tablinks" onclick="openTab(event,'ostalo')">Ostalo</button>
+        </div>
+
+        <div id="ocjene" class="tabcontent" style="display:block;">
+            <div id="listaOcjena"></div>
+            <div class="summary-box">
+                <span>Ukupni prosjek ocjena</span>
+                <div class="avg-large" id="prosjek">0.00</div>
+            </div>
+        </div>
+
+        <div id="biljeske" class="tabcontent">
+            <div id="listaBiljeski"></div>
+        </div>
+
+        <div id="ostalo" class="tabcontent">
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>🚫Izostanci🚫</th>
+                        <th>🛑Negativne🛑</th>
+                        <th>⚖️Vladanje⚖️</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="brojIzostanaka">0</td>
+                        <td id="brojNegativnih" style="color: #ff9a9e;">0</td>
+                        <td id="brojVladanje">Uzorito</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="listaIzostanaka"></div>
+        </div>
+
+        <a href="index.html" class="logout">Sigurna odjava iz sustava</a>
     </div>
 
+    <div id="detaljModal" class="modal">
+        <div class="modal-content">
+            <div id="modalKrug" class="big-circle">5</div>
+            <h3 style="margin-bottom: 10px; color: #764ba2;">Detalji zapisa</h3>
+            <div id="modalOpis" class="modal-desc"></div>
+            <button class="close-btn" onclick="zatvoriModal()">Zatvori</button>
+        </div>
+    </div>
+
+    <script src="ocjene_i_ostalo.js"></script>
+
     <script>
-        const prijavljeniUser = localStorage.getItem('currentUser');
-        const baza = JSON.parse(localStorage.getItem('globalnaBaza'));
-        const opisZone = document.getElementById('opisZone');
+        const user = localStorage.getItem("currentUser");
+        const ucenik = bazaUcenika[user];
 
-        if (prijavljeniUser && baza && baza[prijavljeniUser]) {
-            const ucenik = baza[prijavljeniUser];
-            document.getElementById('imeUcenika').textContent = ucenik.ime;
-            const kontejner = document.getElementById('prikazOcjena');
-            
-            // FILTRIRANJE ZA PROSJEK (Samo brojčane ocjene)
-            const samoOcjeneStavke = ucenik.podaci.filter(s => s.ocjena !== undefined);
-            const suma = samoOcjeneStavke.reduce((a, b) => a + b.ocjena, 0);
-            
-            ucenik.podaci.forEach(stavka => {
-                const gradeWrapper = document.createElement('div');
-                gradeWrapper.className = 'grade-item';
+        if (!ucenik) { window.location.href = "index.html"; }
 
-                const box = document.createElement('div');
-                box.className = 'grade-box';
-                
-                if (stavka.ocjena === undefined) {
-                    box.textContent = "i";
-                    box.classList.add('bg-gray');
-                    gradeWrapper.onclick = () => {
-                        opisZone.innerHTML = `<strong>Bilješka:</strong> ${stavka.opis}`;
-                        opisZone.style.background = "#fff3cd"; // Žućkasta boja za bilješke
-                    };
-                } else {
-                    box.textContent = stavka.ocjena;
-                    box.classList.add('bg-purple');
-                    gradeWrapper.onclick = () => {
-                        opisZone.innerHTML = `<strong>Ocjena ${stavka.ocjena}:</strong> ${stavka.opis}`;
-                        opisZone.style.background = "#e8f0fe";
-                    };
+        document.getElementById("imeUcenika").textContent = "Pregled za: " + ucenik.ime;
+
+        const modal = document.getElementById("detaljModal");
+
+        function prikaziModal(oznaka, tekst) {
+            document.getElementById("modalKrug").textContent = oznaka;
+            document.getElementById("modalKrug").style.background = (oznaka === "ℹ️") ? "#f39c12" : "#764ba2";
+            document.getElementById("modalOpis").textContent = tekst;
+            modal.style.display = "block";
+        }
+
+        function zatvoriModal() { modal.style.display = "none"; }
+        window.onclick = (e) => { if (e.target == modal) zatvoriModal(); }
+
+        const listaOcjena = document.getElementById("listaOcjena");
+        const listaBiljeski = document.getElementById("listaBiljeski");
+        const listaIzostanaka = document.getElementById("listaIzostanaka");
+
+        let suma = 0, broj = 0, negativne = 0;
+
+        ucenik.podaci.forEach(o => {
+            const div = document.createElement("div");
+            div.className = "grade-item";
+
+            if (o.ocjena !== null && o.ocjena !== undefined && o.ocjena !== "") {
+                const ocjenaNum = Number(o.ocjena);
+                suma += ocjenaNum;
+                broj++;
+
+                // POPRAVAK: Negativna je ako je ocjena MANJA OD 3 (znači 1 i 2)
+                if (ocjenaNum < 3) {
+                    negativne++;
                 }
 
-                gradeWrapper.appendChild(box);
-                kontejner.appendChild(gradeWrapper);
-            });
+                div.innerHTML = `<div class="grade-circle">${ocjenaNum}</div><div class="grade-info">${o.opis}</div>`;
+                div.onclick = () => prikaziModal(ocjenaNum, o.opis);
+                listaOcjena.appendChild(div);
+            } else {
+                div.innerHTML = `<div class="grade-circle">ℹ️</div><div class="grade-info">${o.opis}</div>`;
+                div.onclick = () => prikaziModal("ℹ️", o.opis);
+                listaBiljeski.appendChild(div);
+            }
+        });
 
-            const prosjek = samoOcjeneStavke.length > 0 ? (suma / samoOcjeneStavke.length).toFixed(2) : "0.00";
-            document.getElementById('mojProsjek').textContent = prosjek;
-        } else {
-            window.location.href = 'index.html';
+        document.getElementById("prosjek").textContent = broj ? (suma / broj).toFixed(2) : "0.00";
+        document.getElementById("brojNegativnih").textContent = negativne;
+        document.getElementById("brojVladanje").textContent = ucenik.vladanje || "Uzorito";
+
+        const iz = ucenik.izostanci || [];
+        document.getElementById("brojIzostanaka").textContent = iz.length;
+
+        iz.forEach((i, index) => {
+            const div = document.createElement("div");
+            div.className = "grade-item";
+            div.innerHTML = `
+                <div class="grade-circle" style="background: rgba(255,255,255,0.2); color: #fff;">${index + 1}</div>
+                <div class="grade-info"><strong>${i.datum}</strong><br>${i.razlog}</div>`;
+            div.onclick = () => prikaziModal("📅", `${i.datum}: ${i.razlog}`);
+            listaIzostanaka.appendChild(div);
+        });
+
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            const tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tabcontent.length; i++) tabcontent[i].style.display = "none";
+            for (let i = 0; i < tablinks.length; i++) tablinks[i].classList.remove("active");
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.classList.add("active");
         }
     </script>
 </body>
+
 </html>
