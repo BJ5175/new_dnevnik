@@ -16,7 +16,8 @@ const bazaUcenika = {
             { ocjena: 4, opis: "Zadatak s sata" },
             { ocjena: 3, opis: "Test 65/100" },
             { ocjena: 2, opis: "Projekat" },
-            { ocjena: 1, opis: "Aktivnost na satu" }
+            { ocjena: 1, opis: "Aktivnost na satu" },
+            { ocjena: 5, opis: "Odlična stranica" }
         ],
         vladanje: 2
     },
@@ -28,9 +29,10 @@ const bazaUcenika = {
             { ocjena: 5, opis: "Zadatak s sata" },
             { ocjena: 5, opis: "Test 100/100" },
             { ocjena: 4, opis: "Zadatak s sata" },
-            { ocjena: 3, opis: "Aktivnost na satu" }
+            { ocjena: 3, opis: "Aktivnost na satu" },
+            { ocjena: 5, opis: "(5-) Usmeni odgovor" }
         ],
-        vladanje: 5
+        vladanje: 4
     },
     "Una.Savic": {
         ime: "Una Savić",
@@ -60,9 +62,9 @@ const bazaUcenika = {
         prezime: "Petricevic",
         izostanci: [],
         podaci: [{ ocjena: 5, opis: "Aktivnost na satu" },
-            { ocjena: 5, opis: "Zadatak s sata" },
+        { ocjena: 5, opis: "Zadatak s sata" },
         ],
-        
+
         vladanje: 5
     },
     "Filip.Vujicic": {
@@ -74,7 +76,7 @@ const bazaUcenika = {
             { ocjena: 5, opis: "CodeMatrix" },
             { ocjena: 5, opis: "CodeMatrix" }
         ],
-        vladanje: 4
+        vladanje: 5
     },
     "Sergej.Savcic": {
         ime: "Sergej Savčić",
@@ -83,7 +85,8 @@ const bazaUcenika = {
         podaci: [
             { ocjena: 5, opis: "Test" },
             { ocjena: 5, opis: "Zadatak" },
-            { ocjena: 5, opis: "Zadatak" }
+            { ocjena: 5, opis: "Zadatak" },
+            { ocjena: 5, opis: "Prezentacija" }
         ],
         vladanje: 5
     },
