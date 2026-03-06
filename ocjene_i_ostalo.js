@@ -30,9 +30,10 @@ const bazaUcenika = {
             { ocjena: 5, opis: "Test 100/100" },
             { ocjena: 4, opis: "Zadatak s sata" },
             { ocjena: 3, opis: "Aktivnost na satu" },
-            { ocjena: 5, opis: "(5-) Usmeni odgovor" }
+            { ocjena: 5, opis: "(5-) Usmeni odgovor" },
+            { ocjena: 1, opis: "Loše vladanje" }
         ],
-        vladanje: 5
+        vladanje: 3
     },
     "Una.Savic": {
         ime: "Una Savić",
@@ -41,8 +42,8 @@ const bazaUcenika = {
         podaci: [
             { ocjena: 5, opis: "Grupni rad" },
             { ocjena: 4, opis: "Vježba" },
-{ ocjena: 4, opis: "Zadatak s sata" },
-{ ocjena: 5, opis: "Kviz" }
+            { ocjena: 4, opis: "Zadatak s sata" },
+            { ocjena: 5, opis: "Kviz" }
         ],
         vladanje: 5
     },
@@ -94,16 +95,5 @@ const bazaUcenika = {
             { ocjena: 5, opis: "Prezentacija" }
         ],
         vladanje: 5
-    },
-    "Sergej.Mocevic": {
-        ime: "Sergej Močević",
-        prezime: "Mocevic",
-        izostanci: [
-            { datum: "24.02.2026", razlog: "Bolest" },
-            { datum: "20.02.2026", razlog: "Bolest" },
-                { datum: "6.03.2026", razlog: "Utekao" }
-        ],
-        podaci: [{ ocjena: 5, opis: "Grupni rad" }],
-        vladanje: 4
     }
 };
