@@ -41,7 +41,8 @@ const bazaUcenika = {
         podaci: [
             { ocjena: 5, opis: "Grupni rad" },
             { ocjena: 4, opis: "Vježba" },
-{ ocjena: 4, opis: "Zadatak s sata" }
+{ ocjena: 4, opis: "Zadatak s sata" },
+{ ocjena: 5, opis: "Kviz" }
         ],
         vladanje: 5
     },
@@ -76,7 +77,8 @@ const bazaUcenika = {
         podaci: [
             { ocjena: 5, opis: "Test" },
             { ocjena: 5, opis: "CodeMatrix" },
-            { ocjena: 5, opis: "CodeMatrix" }
+            { ocjena: 5, opis: "CodeMatrix" },
+            { ocjena: 5, opis: "Kviz" }
         ],
         vladanje: 5
     },
