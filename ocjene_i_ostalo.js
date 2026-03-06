@@ -32,7 +32,7 @@ const bazaUcenika = {
             { ocjena: 3, opis: "Aktivnost na satu" },
             { ocjena: 5, opis: "(5-) Usmeni odgovor" }
         ],
-        vladanje: 4
+        vladanje: 5
     },
     "Una.Savic": {
         ime: "Una Savić",
@@ -40,7 +40,8 @@ const bazaUcenika = {
         izostanci: [{ datum: "13.02.2026", razlog: "Bolest" }],
         podaci: [
             { ocjena: 5, opis: "Grupni rad" },
-            { ocjena: 4, opis: "Vježba" }
+            { ocjena: 4, opis: "Vježba" },
+{ ocjena: 4, opis: "Zadatak s sata" }
         ],
         vladanje: 5
     },
@@ -53,7 +54,8 @@ const bazaUcenika = {
         podaci: [
             { ocjena: null, opis: "Učenica prosula sok po tuđem laptopu" },
             { ocjena: 5, opis: "Grupni rad" },
-            { ocjena: 4, opis: "Vježba" }
+            { ocjena: 4, opis: "Vježba" },
+            { ocjena: 4, opis: "Zadatak s sata" }
         ],
         vladanje: 5
     },
@@ -95,9 +97,10 @@ const bazaUcenika = {
         prezime: "Mocevic",
         izostanci: [
             { datum: "24.02.2026", razlog: "Bolest" },
-            { datum: "20.02.2026", razlog: "Bolest" }
+            { datum: "20.02.2026", razlog: "Bolest" },
+                { datum: "6.03.2026", razlog: "Utekao" }
         ],
         podaci: [{ ocjena: 5, opis: "Grupni rad" }],
-        vladanje: 5
+        vladanje: 4
     }
 };
