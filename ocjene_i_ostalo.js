@@ -66,6 +66,7 @@ const bazaUcenika = {
         izostanci: [],
         podaci: [{ ocjena: 5, opis: "Aktivnost na satu" },
         { ocjena: 5, opis: "Zadatak s sata" },
+        { ocjena: 5, opis: "Zadatak s sata" },
         ],
 
         vladanje: 5
