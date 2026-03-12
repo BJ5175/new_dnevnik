@@ -17,9 +17,10 @@ const bazaUcenika = {
             { ocjena: 3, opis: "Test 65/100" },
             { ocjena: 2, opis: "Projekat" },
             { ocjena: 1, opis: "Aktivnost na satu" },
-            { ocjena: 5, opis: "Odlična stranica" }
+            { ocjena: 5, opis: "Odlična stranica" },
+            { ocjena: 5, opis: "Trud" }
         ],
-        vladanje: 2
+        vladanje: 4
     },
     "Nikola.Ujic": {
         ime: "Nikola Ujić",
