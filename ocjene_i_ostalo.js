@@ -10,7 +10,7 @@ const bazaUcenika = {
     "Matija.Perucica": {
         ime: "Matija Peručica",
         prezime: "Perucica",
-        izostanci: [],
+        izostanci: [{ datum: "6.3.2026", razlog: "U Kalinoviku" }],
         podaci: [
             { ocjena: 5, opis: "Zadatak s sata" },
             { ocjena: 4, opis: "Zadatak s sata" },
@@ -31,7 +31,9 @@ const bazaUcenika = {
             { ocjena: 4, opis: "Zadatak s sata" },
             { ocjena: 3, opis: "Aktivnost na satu" },
             { ocjena: 5, opis: "(5-) Usmeni odgovor" },
-            { ocjena: 1, opis: "Loše vladanje" }
+            { ocjena: 1, opis: "Loše vladanje" },
+            { ocjena: 5, opis: "Odlična stranica" },
+            { ocjena: 5, opis: "Zadatak s sata" }
         ],
         vladanje: 3
     },
@@ -43,7 +45,9 @@ const bazaUcenika = {
             { ocjena: 5, opis: "Grupni rad" },
             { ocjena: 4, opis: "Vježba" },
             { ocjena: 4, opis: "Zadatak s sata" },
-            { ocjena: 5, opis: "Kviz" }
+            { ocjena: 5, opis: "Kviz" },
+            { ocjena: 5, opis: "Prezentacija" },
+            { ocjena: 5, opis: "Aktivnost na satu" },
         ],
         vladanje: 5
     },
@@ -57,7 +61,9 @@ const bazaUcenika = {
             { ocjena: null, opis: "Učenica prosula sok po tuđem laptopu" },
             { ocjena: 5, opis: "Grupni rad" },
             { ocjena: 4, opis: "Vježba" },
-            { ocjena: 4, opis: "Zadatak s sata" }
+            { ocjena: 4, opis: "Zadatak s sata" },
+            { ocjena: 5, opis: "Kviz" },
+            { ocjena: 5, opis: "Prezentacija" }
         ],
         vladanje: 5
     },
@@ -68,6 +74,8 @@ const bazaUcenika = {
         podaci: [{ ocjena: 5, opis: "Aktivnost na satu" },
         { ocjena: 5, opis: "Zadatak s sata" },
         { ocjena: 5, opis: "Zadatak s sata" },
+        { ocjena: 5, opis: "Kviz" },
+        { ocjena: 5, opis: "Prezentacija" }
         ],
 
         vladanje: 5
