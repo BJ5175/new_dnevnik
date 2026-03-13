@@ -10,7 +10,9 @@ const bazaUcenika = {
     "Matija.Perucica": {
         ime: "Matija Peručica",
         prezime: "Perucica",
-        izostanci: [{ datum: "6.3.2026", razlog: "U Kalinoviku" }],
+        izostanci: [{ datum: "6.3.2026", razlog: "U Kalinoviku" },
+        { datum: "13.02.2026", razlog: "Rođendan??" }],
+        
         podaci: [
             { ocjena: 5, opis: "Zadatak s sata" },
             { ocjena: 4, opis: "Zadatak s sata" },
@@ -50,7 +52,7 @@ const bazaUcenika = {
             { ocjena: 5, opis: "Prezentacija" },
             { ocjena: 5, opis: "Aktivnost na satu" },
         ],
-        vladanje: 5
+        vladanje: 4
     },
     "Una.Drakul": {
         ime: "Una Drakul",
@@ -66,7 +68,7 @@ const bazaUcenika = {
             { ocjena: 5, opis: "Kviz" },
             { ocjena: 5, opis: "Prezentacija" }
         ],
-        vladanje: 5
+        vladanje: 4
     },
     "Helena.Petricevic": {
         ime: "Helena Petričević",
@@ -76,7 +78,8 @@ const bazaUcenika = {
         { ocjena: 5, opis: "Zadatak s sata" },
         { ocjena: 5, opis: "Zadatak s sata" },
         { ocjena: 5, opis: "Kviz" },
-        { ocjena: 5, opis: "Prezentacija" }
+        { ocjena: 5, opis: "Prezentacija" },
+        { ocjena: 5, opis: "95% 5+ Test" }
         ],
 
         vladanje: 5
@@ -89,19 +92,22 @@ const bazaUcenika = {
             { ocjena: 5, opis: "Test" },
             { ocjena: 5, opis: "CodeMatrix" },
             { ocjena: 5, opis: "CodeMatrix" },
-            { ocjena: 5, opis: "Kviz" }
+            { ocjena: 5, opis: "Kviz" },
+            { ocjena: 5, opis: "Zadatak" },
+            { ocjena: 4, opis: "75% 4+ Test" }
         ],
         vladanje: 5
     },
     "Sergej.Savcic": {
         ime: "Sergej Savčić",
         prezime: "Savcic",
-        izostanci: [],
+        izostanci: [{ datum: "13.02.2026", razlog: "Bolest" }],
         podaci: [
             { ocjena: 5, opis: "Test" },
             { ocjena: 5, opis: "Zadatak" },
             { ocjena: 5, opis: "Zadatak" },
-            { ocjena: 5, opis: "Prezentacija" }
+            { ocjena: 5, opis: "Prezentacija" },
+            { ocjena: 5, opis: "5+ 100% Test" },
         ],
         vladanje: 5
     }
