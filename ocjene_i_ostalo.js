@@ -12,7 +12,7 @@ const bazaUcenika = {
         prezime: "Perucica",
         izostanci: [{ datum: "6.3.2026", razlog: "U Kalinoviku" },
         { datum: "13.02.2026", razlog: "Rođendan??" }],
-        
+
         podaci: [
             { ocjena: 5, opis: "Zadatak s sata" },
             { ocjena: 4, opis: "Zadatak s sata" },
@@ -101,14 +101,15 @@ const bazaUcenika = {
             { ocjena: 5, opis: "CodeMatrix" },
             { ocjena: 5, opis: "Kviz" },
             { ocjena: 5, opis: "Zadatak" },
-            { ocjena: 4, opis: "75% 4+ Test" }
+            { ocjena: 4, opis: "75% 4+ Test" },
+            { ocjena: 5, opis: "Zadatak" },
         ],
         vladanje: 5
     },
     "Sergej.Savcic": {
         ime: "Sergej Savčić",
         prezime: "Savcic",
-        izostanci: [{ datum: "13.02.2026", razlog: "Bolest" }],
+        izostanci: [],
         podaci: [
             { ocjena: 5, opis: "Test" },
             { ocjena: 5, opis: "Zadatak" },
