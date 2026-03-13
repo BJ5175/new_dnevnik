@@ -20,7 +20,14 @@ const bazaUcenika = {
             { ocjena: 2, opis: "Projekat" },
             { ocjena: 1, opis: "Aktivnost na satu" },
             { ocjena: 5, opis: "Odlična stranica" },
-            { ocjena: 5, opis: "Trud" }
+            { ocjena: 5, opis: "Trud" },
+            { ocjena: 5, opis: "Odlična stranica" },
+            { ocjena: 5, opis: "Trud" },
+            { ocjena: 5, opis: "Odlična stranica" },
+            { ocjena: 5, opis: "Trud" },
+            { ocjena: 5, opis: "Odlična stranica" },
+            { ocjena: 5, opis: "Trud" },
+
         ],
         vladanje: 4
     },
