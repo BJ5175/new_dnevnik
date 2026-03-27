@@ -59,7 +59,7 @@ const bazaUcenika = {
             { ocjena: 5, opis: "Prezentacija" },
             { ocjena: 5, opis: "Aktivnost na satu" },
         ],
-        vladanje: 4
+        vladanje: 3
     },
     "Una.Drakul": {
         ime: "Una Drakul",
@@ -75,7 +75,7 @@ const bazaUcenika = {
             { ocjena: 5, opis: "Kviz" },
             { ocjena: 5, opis: "Prezentacija" }
         ],
-        vladanje: 4
+        vladanje: 3
     },
     "Helena.Petricevic": {
         ime: "Helena Petričević",
