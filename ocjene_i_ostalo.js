@@ -43,7 +43,8 @@ const bazaUcenika = {
             { ocjena: 5, opis: "(5-) Usmeni odgovor" },
             { ocjena: 1, opis: "Loše vladanje" },
             { ocjena: 5, opis: "Odlična stranica" },
-            { ocjena: 5, opis: "Zadatak s sata" }
+            { ocjena: 5, opis: "Zadatak s sata" },
+
         ],
         vladanje: 3
     },
@@ -86,7 +87,9 @@ const bazaUcenika = {
         { ocjena: 5, opis: "Zadatak s sata" },
         { ocjena: 5, opis: "Kviz" },
         { ocjena: 5, opis: "Prezentacija" },
-        { ocjena: 5, opis: "95% 5+ Test" }
+        { ocjena: 5, opis: "95% 5+ Test" },
+        { ocjena: 5, opis: "100% 5+ Test" },
+
         ],
 
         vladanje: 5
@@ -103,6 +106,8 @@ const bazaUcenika = {
             { ocjena: 5, opis: "Zadatak" },
             { ocjena: 4, opis: "75% 4+ Test" },
             { ocjena: 5, opis: "Zadatak" },
+            { ocjena: 5, opis: "100% 5+ Test" },
+
         ],
         vladanje: 5
     },
@@ -116,6 +121,8 @@ const bazaUcenika = {
             { ocjena: 5, opis: "Zadatak" },
             { ocjena: 5, opis: "Prezentacija" },
             { ocjena: 5, opis: "5+ 100% Test" },
+            { ocjena: 5, opis: "100% 5+ Test" },
+
         ],
         vladanje: 5
     }
