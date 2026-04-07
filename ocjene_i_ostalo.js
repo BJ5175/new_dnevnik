@@ -78,9 +78,9 @@ const bazaUcenika = {
         ],
         vladanje: 3
     },
-    "Helena.Petricevic": {
-        ime: "Helena Petričević",
-        prezime: "Petricevic",
+    "Helena.Patricevic": {
+        ime: "Helena Patričević",
+        prezime: "Patricevic",
         izostanci: [],
         podaci: [{ ocjena: 5, opis: "Aktivnost na satu" },
         { ocjena: 5, opis: "Zadatak s sata" },
