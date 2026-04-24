@@ -11,7 +11,8 @@ const bazaUcenika = {
         ime: "Matija Peručica",
         prezime: "Perucica",
         izostanci: [{ datum: "6.3.2026", razlog: "U Kalinoviku" },
-        { datum: "13.02.2026", razlog: "Rođendan??" }],
+        { datum: "13.02.2026", razlog: "Rođendan??" },
+        { datum: "21.04.2026", razlog: "Vjv se naljutio" },],
 
         podaci: [
             { ocjena: 5, opis: "Zadatak s sata" },
@@ -78,10 +79,10 @@ const bazaUcenika = {
         ],
         vladanje: 3
     },
-    "Helena.Patricevic": {
-        ime: "Helena Patričević",
-        prezime: "Patricevic",
-        izostanci: [],
+    "Helena.Petricevic": {
+        ime: "Helena Petričević",
+        prezime: "Petricevic",
+        izostanci: [{ datum: "21.04.2026", razlog: "Alergija/Bolest" }],
         podaci: [{ ocjena: 5, opis: "Aktivnost na satu" },
         { ocjena: 5, opis: "Zadatak s sata" },
         { ocjena: 5, opis: "Zadatak s sata" },
