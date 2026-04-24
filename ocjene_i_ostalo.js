@@ -6,32 +6,7 @@
 //{ ocjena: 2, opis: "Loš rad na satu" },  // <-- ovo je negativna
 //{ ocjena: null, opis: "Bilješka: zaboravila pribor" }
 // ==========================================
-const bazaUcenika = {
-    "Matija.Perucica": {
-        ime: "Matija Peručica",
-        prezime: "Perucica",
-        izostanci: [{ datum: "6.3.2026", razlog: "U Kalinoviku" },
-        { datum: "13.02.2026", razlog: "Rođendan??" },
-        { datum: "21.04.2026", razlog: "Vjv se naljutio" },],
-
-        podaci: [
-            { ocjena: 5, opis: "Zadatak s sata" },
-            { ocjena: 4, opis: "Zadatak s sata" },
-            { ocjena: 3, opis: "Test 65/100" },
-            { ocjena: 2, opis: "Projekat" },
-            { ocjena: 1, opis: "Aktivnost na satu" },
-            { ocjena: 5, opis: "Odlična stranica" },
-            { ocjena: 5, opis: "Trud" },
-            { ocjena: 5, opis: "Odlična stranica" },
-            { ocjena: 5, opis: "Trud" },
-            { ocjena: 5, opis: "Odlična stranica" },
-            { ocjena: 5, opis: "Trud" },
-            { ocjena: 5, opis: "Odlična stranica" },
-            { ocjena: 5, opis: "Trud" },
-
-        ],
-        vladanje: 4
-    },
+const bazaUcenika = {   
     "Nikola.Ujic": {
         ime: "Nikola Ujić",
         prezime: "Ujic",
